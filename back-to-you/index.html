@@ -172,7 +172,8 @@
                 }
                 
                 ViewModel.prototype.tweeted = function(station) {
-                  ga("send", "event", "bty", "tweet", station.twitter);
+                    ga("send", "event", "bty", "tweet", station.twitter);
+                    return true;
                 };
                 
                 return ViewModel;
