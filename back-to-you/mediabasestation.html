@@ -20,9 +20,7 @@
             <input type="hidden" class="form-control" name="c_let" id="c_let" />
         </div>
         <div class="form-group">
-            <div>
-                <img id="captchaImage" src="http://mediabase.com/mmrweb/include/captcha.asp" /> <a href="" onClick="reloadCaptcha();">Reload Captcha</a>
-            </div>
+            <p>See the main page for captcha instructions</p>
             <input type="text" class="form-control" placeholder="Captcha" name="captchacode" id="captchacode" />
         </div>
         <button type="submit">Request</button>
@@ -41,13 +39,6 @@
             $("#age").val(e.data.user.age);
             $("#c_let").val(e.data.station.station);
         }, false);
-
-        function reloadCaptcha() {
-            var captchaImage = $("#captchaImage");
-            var captchaUrl = captchaImage.attr("src");
-            captchaImage.attr("src", "");
-            captchaImage.attr("src", captchaUrl);
-        }
     </script>
 </body>
 
