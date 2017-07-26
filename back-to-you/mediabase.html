@@ -94,11 +94,15 @@
             <h4>Click the link below to open a mediabase form. Scroll to the bottom to the captcha from that page and put it into the station form on *this* page. Each station request requires a new captcha (but it can be from any station), so you will need to go back to the other tab, and click "Change Code" to get a new captcha value.</p>
             <a target="_blank" href="http://www.mediabase.com/mmrweb/7/stationplaylistrequest.asp?c_let=kyky-FM">Get Captcha</a>
         </div> 
+        <p>Click on a station to start a request. A successful request will say "Thank You For Your Request!".</p>
         <div id="stations" data-bind="foreach: items" class="row is-flex">
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="panel panel-default">
                     <div class="panel-body" data-bind="click: $parent.loadStation">
-                        <div class="station text-center" data-bind="text: station"></div>
+                        <div class="station text-center">
+                            <div data-bind="text: station"></div>
+                            <div class="text-center" data-bind="text: added === 'Y' ? '(added)' : '(not added)'"></div>
+                        </div>
                         <iframe src="" data-bind="attr: { 'data-station': station, id: 'station-' + station }, event: { load: $parent.stationLoaded }"></iframe>
                     </div>
                 </div>
