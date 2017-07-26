@@ -7,17 +7,63 @@
     <style>
         iframe {
             display: none;
+            width: 100%;
         }
         
         #error {
             display: none;
             color: red;
         }
+        .station {
+            cursor: pointer;
+        }
+
+        .row.is-flex {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .row.is-flex > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /*
+        * And with max cross-browser enabled.
+        * Nobody should ever write this by hand. 
+        * Use a preprocesser with autoprefixing.
+        */
+        .row.is-flex {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+
+        .row.is-flex > [class*='col-'] {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-3">Request Back to You via Mediabase!</h1>
+            <p>Help support Back to You and promote the song by submitting Mediabase requests to radio stations. All you need do is enter in a few fields to be used with all requests, and then fill out a captcha for each station.</p>
+            <p>Every time you load the page, the radio stations order will be randomly generated. Feeling ambitious? Load the next set of radio stations and submit requests to them as well!</p>
+            <p><em>Mediabase requests must be done via a US ip. You can only send one request per station per day.</em></p>
+        </div>
         <div id="shared-form">
             <div class="form-group">
                 <label for="username">Name</label>
@@ -44,10 +90,19 @@
             <button type="button" class="btn btn-primary" data-bind="click: formFilledIn">Next</button>
         </div>
         <!-- ko if: hasFilledInForm -->
-        <div id="stations" data-bind="foreach: stations">
-            <div data-bind="text: station, click: $parent.loadStation"></div>
-            <iframe src="" data-bind="attr: { 'data-station': station, id: 'station-' + station }, event: { load: $parent.stationLoaded }"></iframe>
-            <br />
+        <div>
+            <h4>Click the link below to open a mediabase form. Scroll to the bottom to the captcha from that page and put it into the station form on *this* page. Each station request requires a new captcha (but it can be from any station), so you will need to go back to the other tab, and click "Change Code" to get a new captcha value.</p>
+            <a target="_blank" href="http://www.mediabase.com/mmrweb/7/stationplaylistrequest.asp?c_let=kyky-FM">Get Captcha</a>
+        </div> 
+        <div id="stations" data-bind="foreach: items" class="row is-flex">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-body" data-bind="click: $parent.loadStation">
+                        <div class="station text-center" data-bind="text: station"></div>
+                        <iframe src="" data-bind="attr: { 'data-station': station, id: 'station-' + station }, event: { load: $parent.stationLoaded }"></iframe>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- /ko -->
 
@@ -69,8 +124,12 @@
 
                 var getVal = function (entry, key) { return entry["gsx$" + key].$t; };
                 var stationsTask = $.getJSON("https://spreadsheets.google.com/feeds/list/" + spreadsheetId + "/" + sheetId + "/public/full?alt=json").done(function(json) {
-                    self.stations(_.filter(_.map(json.feed.entry, function(s) { return {station: getVal(s, "station"), community: getVal(s, "city") + ", " + getVal(s, "state"), zip: getVal(s, "zip"), added: getVal(s, "added")}}), function(s) { return s.station == "KYKY-FM"}));
-                });   
+                    self.stations(_.shuffle(_.map(json.feed.entry, function(s) { return {station: getVal(s, "station"), community: getVal(s, "city") + ", " + getVal(s, "state"), zip: getVal(s, "zip"), added: getVal(s, "added")}})));
+                });
+
+                this.items = ko.computed(function() {
+                    return _.take(_.shuffle(self.stations()), 12);
+                }); 
             }
 
             ViewModel.prototype.stationLoaded = function(station) {
