@@ -178,6 +178,7 @@
                     $("#error").show();
                 } else {
                     $("#error").hide();   
+                    this.stations.valueHasMutated();
                     this.hasFilledInForm(true);
                 }
             };
