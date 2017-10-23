@@ -86,15 +86,15 @@
 
       <div id="form">
         <div class="form-group">
-            <label for="country">Country</label> <span data-bind="if: selectedCountry"><a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?country=${selectedCountry}` } }">Link to <span data-bind="text: selectedCountry">/span></a></span>
+            <label for="country">Country</label> <span data-bind="if: selectedCountry"><a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?country=${selectedCountry}` }">Link to <span data-bind="text: selectedCountry">/span></a></span>
           <select id="country" class="form-control" data-bind="options: countries, value: selectedCountry"></select>
         </div>
         <div class="form-group">
-          <label for="song">Song</label> <span data-bind="if: selectedSong"><a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?song=${selectedSong.code}` } }">Link to <span data-bind="text: selectedSong.title"></span></a></span>
+          <label for="song">Song</label> <span data-bind="if: selectedSong"><a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?song=${selectedSong.code}` }">Link to <span data-bind="text: selectedSong.title"></span></a></span>
           <select id="song" class="form-control" data-bind="options: songs, value: selectedSong, optionsCaption: 'Select a song...', optionsText: function(song) { return song.title + ' (' + song.artist + ')'; }"></select>
       </div>
       <div data-bind="if: selectedSong() && selectedCountry">
-          <a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?country=${selectedCountry}&song=${selectedSong.code}` } }">Link to <span data-bind="text: selectedCountry"> / <span data-bind="text: selectedSong.title"></span></a>
+          <a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?country=${selectedCountry}&song=${selectedSong.code}` }">Link to <span data-bind="text: selectedCountry"> / <span data-bind="text: selectedSong.title"></span></a>
       </div>
 
       <div id="items" style="margin-top: 2em; text-align: center;" data-bind="foreach: { data: items, afterRender: handleRender }">
