@@ -201,7 +201,7 @@
               that.selectedCountry(qs.country || "US");
               that.songs(songs);
               if (!_.isEmpty(qs.song)) {
-                  that.selectedSong(qs.song);
+                  that.selectedSong(_.find(this.songs(), function(s) { return s.code == qs.song; }));
               }
             });
             this.selectedLanguage = ko.computed(function() {
