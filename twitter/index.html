@@ -183,8 +183,26 @@
               that.tweets(tweets);
               that.languages(languages);
               that.countries(countries);
-              that.selectedCountry("US");
+                
+              var qs = (function(a) {
+                if (a == "") return {};
+                var b = {};
+                for (var i = 0; i < a.length; ++i)
+                {
+                    var p=a[i].split('=', 2);
+                    if (p.length == 1)
+                        b[p[0]] = "";
+                    else
+                        b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                }
+                return b;
+              })(window.location.search.substr(1).split('&'));
+                
+              that.selectedCountry(qs.country || "US");
               that.songs(songs);
+              if (!_.isEmpty(qs.song)) {
+                  that.selectedSong(qs.song);
+              }
             });
             this.selectedLanguage = ko.computed(function() {
               var lang = _.chain(that.languages())
@@ -295,7 +313,6 @@
             return formatCountry(country, 36);
           }
         });
-        $("#country").val("BR").trigger("change");
 
         $("#song").select2({
           templateResult: formatSong,
