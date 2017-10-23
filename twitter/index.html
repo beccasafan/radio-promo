@@ -90,7 +90,7 @@
           <select id="country" class="form-control" data-bind="options: countries, value: selectedCountry"></select>
         </div>
         <div class="form-group">
-          <label for="song">Song</label> <span data-bind="if: selectedSong"><a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?song=${selectedSong.code}` }">Link to <span data-bind="text: selectedSong().title"></span></a></span>
+          <label for="song">Song</label> <span data-bind="if: selectedSong"><a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?song=${selectedSong().code}` }">Link to <span data-bind="text: selectedSong().title"></span></a></span>
           <select id="song" class="form-control" data-bind="options: songs, value: selectedSong, optionsCaption: 'Select a song...', optionsText: function(song) { return song.title + ' (' + song.artist + ')'; }"></select>
       </div>
       <div data-bind="if: selectedSong() && selectedCountry()">
