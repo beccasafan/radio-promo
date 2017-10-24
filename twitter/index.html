@@ -263,7 +263,7 @@
               };
             });
                 
-                if (!hasInitializedStations && !_.isEmpty(shuffled) && !_.isEmpty(that.qs.stations)) {
+                if (!hasInitializedStations && !_.isEmpty(shuffled) && !_.isEmpty(that.qs) && !_.isEmpty(that.qs.stations)) {
                     _.each(that.qs.stations.split(",").reverse(), function(s) {
                             move(shuffledStations, _.findIndex(shuffledStations, function(station) { return station.twitter.toLowerCase() === s; }), 0);
                         });
