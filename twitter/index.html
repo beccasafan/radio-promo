@@ -187,7 +187,7 @@
               that.languages(languages);
               that.countries(countries);
                 
-              var qs = (function(a) {
+              this.qs = (function(a) {
                 if (a == "") return {};
                 var b = {};
                 for (var i = 0; i < a.length; ++i)
@@ -259,8 +259,8 @@
               };
             });
                 
-                if (!hasInitializedStations && !_.isEmpty(shuffled) && !_.isEmpty(qs.stations)) {
-                    _.each(qs.stations.split(",").reverse(), function(s) {
+                if (!hasInitializedStations && !_.isEmpty(shuffled) && !_.isEmpty(that.qs.stations)) {
+                    _.each(that.qs.stations.split(",").reverse(), function(s) {
                             move(shuffledStations, _.findIndex(shuffledStations, function(station) { return station.twitter.toLowerCase() === s; }), 0);
                         });
                         hasInitializedStations = true;
