@@ -96,7 +96,7 @@
       <div data-bind="if: selectedSong() && selectedCountry()">
           <a data-bind="attr: { href: `http://beccasafan.github.io/radio-promo/twitter/?country=${selectedCountry()}&song=${selectedSong().code}` }">Link to <span data-bind="text: selectedCountry"></span> / <span data-bind="text: selectedSong().title"></span></a>
       </div>
-
+      <p>Add &stations=twitter1,twitter2,etc to the url to have those show first.</p>
       <div id="items" style="margin-top: 2em; text-align: center;" data-bind="foreach: { data: items, afterRender: handleRender }">
         <div data-bind="attr: { 'data-call-sign': callSign }">
           <a target="_blank" class="twitter-mention-button" data-bind="click: $parent.tweeted.bind($parent), attr: { href: $parent.getUrl($data), 'data-related': twitter }" data-size="large" data-dnt="true">
@@ -215,6 +215,12 @@
                 .value();
               return lang === undefined ? null : lang.language;
             });
+              
+            var hasInitializedStations = false;
+            this.move = function(arr, from, to) {
+                return arr.splice(to, 0, arr.splice(from, 1)[0]);
+            };
+
             this.items = ko.computed(function() {
               if (
                 _.isEmpty(that.stations()) ||
@@ -242,19 +248,25 @@
               var shuffledStations = _.shuffle(validStations);
               var shuffledTweets = _.shuffle(validTweets);
               var tweetCount = shuffledTweets.length;
+                
+            var shuffled = _.map(shuffledStations, function(s, i) {
+              var tweet = shuffledTweets[i % tweetCount];
+              return {
+                text: tweet.text,
+                twitter: s.twitter,
+                callSign: s.callSign,
+                name: s.name
+              };
+            });
+                
+                if (!hasInitializedStations && !_.isEmpty(shuffled) && !_.isEmpty(qs.stations)) {
+                    _.each(qs.stations.split(",").reverse(), function(s) {
+                            move(shuffledStations, _.findIndex(shuffledStations, function(station) { return station.twitter.toLowerCase() === s; }), 0);
+                        });
+                        hasInitializedStations = true;
+                }
 
-              return _.take(
-                _.map(shuffledStations, function(s, i) {
-                  var tweet = shuffledTweets[i % tweetCount];
-                  return {
-                    text: tweet.text,
-                    twitter: s.twitter,
-                    callSign: s.callSign,
-                    name: s.name
-                  };
-                }),
-                24
-              );
+              return _.take(shuffled, 24);
             });
           }
           ViewModel.prototype.getUrl = function(item) {
