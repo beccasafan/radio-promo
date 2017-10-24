@@ -207,8 +207,8 @@
                     }
               that.selectedCountry(c);
               that.songs(songs);
-              if (!_.isEmpty(qs.song)) {
-                  that.selectedSong(_.find(that.songs(), function(s) { return s.code == qs.song; }));
+              if (!_.isEmpty(that.qs.song)) {
+                  that.selectedSong(_.find(that.songs(), function(s) { return s.code == that.qs.song; }));
               }
             });
             this.selectedLanguage = ko.computed(function() {
