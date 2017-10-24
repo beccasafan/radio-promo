@@ -187,7 +187,7 @@
               that.languages(languages);
               that.countries(countries);
                 
-              this.qs = (function(a) {
+              that.qs = (function(a) {
                 if (a == "") return {};
                 var b = {};
                 for (var i = 0; i < a.length; ++i)
@@ -202,12 +202,12 @@
               })(window.location.search.substr(1).split('&'));
                 
               var c = "US";
-                if (!_.isEmpty(this.qs) && !_.isEmpty(this.qs.country)) {
-                    c = this.qs.country.toUpperCase();
+                if (!_.isEmpty(that.qs) && !_.isEmpty(that.qs.country)) {
+                    c = that.qs.country.toUpperCase();
                     }
               that.selectedCountry(c);
               that.songs(songs);
-              if (!_.isEmpty(this.qs) && !_.isEmpty(this.qs.song)) {
+              if (!_.isEmpty(that.qs) && !_.isEmpty(that.qs.song)) {
                   that.selectedSong(_.find(that.songs(), function(s) { 
                       return s.code.toLowerCase() == that.qs.song; 
                   }));
