@@ -202,13 +202,13 @@
               })(window.location.search.substr(1).split('&'));
                 
               var c = "US";
-                if (!_.isEmpty(that.qs) && !_.isEmpty(that.qs.country)) {
-                    c = that.qs.country;
+                if (!_.isEmpty(this.qs) && !_.isEmpty(this.qs.country)) {
+                    c = this.qs.country;
                     }
               that.selectedCountry(c);
               that.songs(songs);
-              if (!_.isEmpty(that.qs) && !_.isEmpty(that.qs.song)) {
-                  that.selectedSong(_.find(that.songs(), function(s) { return s.code == that.qs.song; }));
+              if (!_.isEmpty(this.qs) && !_.isEmpty(this.qs.song)) {
+                  that.selectedSong(_.find(that.songs(), function(s) { return s.code == this.qs.song; }));
               }
             });
             this.selectedLanguage = ko.computed(function() {
