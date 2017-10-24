@@ -203,12 +203,12 @@
                 
               var c = "US";
                 if (!_.isEmpty(this.qs) && !_.isEmpty(this.qs.country)) {
-                    c = this.qs.country;
+                    c = this.qs.country.toUpperCase();
                     }
               that.selectedCountry(c);
               that.songs(songs);
               if (!_.isEmpty(this.qs) && !_.isEmpty(this.qs.song)) {
-                  that.selectedSong(_.find(that.songs(), function(s) { return s.code == this.qs.song; }));
+                  that.selectedSong(_.find(that.songs(), function(s) { return s.code.toLowerCase() == this.qs.song; }));
               }
             });
             this.selectedLanguage = ko.computed(function() {
