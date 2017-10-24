@@ -201,7 +201,11 @@
                 return b;
               })(window.location.search.substr(1).split('&'));
                 
-              that.selectedCountry(that.qs.country || "US");
+              var c = "US";
+                if (!_.isEmpty(that.qs.country) {
+                    c = that.qs.country;
+                    }
+              that.selectedCountry(c);
               that.songs(songs);
               if (!_.isEmpty(qs.song)) {
                   that.selectedSong(_.find(that.songs(), function(s) { return s.code == qs.song; }));
