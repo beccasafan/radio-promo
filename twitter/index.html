@@ -207,7 +207,7 @@
                     }
               that.selectedCountry(c);
               that.songs(songs);
-              if (!_.isEmpty(that.qs.song)) {
+              if (!_.isEmpty(that.qs) && !_.isEmpty(that.qs.song)) {
                   that.selectedSong(_.find(that.songs(), function(s) { return s.code == that.qs.song; }));
               }
             });
