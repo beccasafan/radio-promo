@@ -223,7 +223,7 @@
             });
               
             var hasInitializedStations = false;
-            this.move = function(arr, from, to) {
+            that.move = function(arr, from, to) {
                 return arr.splice(to, 0, arr.splice(from, 1)[0]);
             };
 
@@ -267,7 +267,7 @@
                 
                 if (!hasInitializedStations && !_.isEmpty(shuffled) && !_.isEmpty(that.qs) && !_.isEmpty(that.qs.stations)) {
                     _.each(that.qs.stations.split(",").reverse(), function(s) {
-                            move(shuffledStations, _.findIndex(shuffledStations, function(station) { return station.twitter.toLowerCase() === s; }), 0);
+                            that.move(shuffledStations, _.findIndex(shuffledStations, function(station) { return station.twitter.toLowerCase() === s; }), 0);
                         });
                         hasInitializedStations = true;
                 }
