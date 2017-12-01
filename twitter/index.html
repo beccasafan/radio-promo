@@ -280,7 +280,7 @@
           ViewModel.prototype.getUrl = function(item) {
             var selectedSong = this.selectedSong();
             return (
-              "https://twitter.com/intent/tweet?&amp;text=.@" +
+              "https://twitter.com/intent/tweet?text=.@" +
               item.twitter +
               " " +
               encodeURIComponent(`${item.text.replace("|||artist|||", selectedSong.handle).replace("|||title|||", selectedSong.hashtag)}`)
